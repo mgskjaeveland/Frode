@@ -9,11 +9,10 @@ import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 public class OodeTest {
 	
 	@Test public void testFOAF() throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
-		Oode.main("http://xmlns.com/foaf/spec/index.rdf");
+		Oode.main("-o http://xmlns.com/foaf/spec/index.rdf".split(" "));
 	}
 
 	@Test public void testOWL() throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
-		Oode.main("http://www.w3.org/2002/07/owl");
-	}
-	
+		Oode.main("-o http://www.w3.org/2002/07/owl".split(" "));
+	}	
 }

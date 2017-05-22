@@ -27,6 +27,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.RDFXMLDocumentFormat;
 import org.semanticweb.owlapi.io.StringDocumentTarget;
@@ -35,48 +42,67 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.semanticweb.owlapi.model.parameters.Imports;
 
 public class Oode {
 	private String xsltURL = "docs/xslt/extraction.xsl";
 	private String cssLocation = "https://mgskjaeveland.github.io/OODE/css/";
-	
+
+	private static final boolean CONSTconsiderImportedOntologies = false;
+	private static final boolean CONSTconsiderImportedClosure = false;
+
 	public static void main (String... args) throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
-		Oode lode = new Oode ();
-		if (args.length == 1) {
-			System.out.println(lode.go(args[0], args[0]));
+		Oode.cli(args);
+	}
+
+	public static void cli (String... args) throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
+		CommandLineParser parser = new DefaultParser();
+
+		final String arg1 = "o", arg2 = "i", arg3 = "1", arg4 = "a";
+
+		Options options = new Options();
+		options.addOption(Option.builder(arg1).hasArg(true).required().desc("The path or IRI to ontology, if local use 'file:///'. Required").build());
+		options.addOption(Option.builder(arg2).hasArg(true).optionalArg(true).desc("The IRI to ontology, if different from the path argument. Optional").build());
+		options.addOption(Option.builder(arg3).hasArg(false).optionalArg(true).desc("Enable direct ontology imports").build());
+		options.addOption(Option.builder(arg4).hasArg(false).optionalArg(true).desc("Enable ontology import closure").build());
+
+		try {
+			CommandLine line = parser.parse(options, args);
+
+			String path = line.getOptionValue(arg1);
+			String iri = line.getOptionValue(arg2, path);
+			boolean imports = line.hasOption(arg3);
+			boolean closure = line.hasOption(arg4);
+
+
+			Oode oode = new Oode();
+			String result = oode.go(path, iri, imports, closure);
+			System.out.println(result);
 		}
-		else if (args.length == 2) {
-			System.out.println(lode.go(args[0], args[1]));
-		} 
-		else {
-			System.out.println("Error, needs 1 or 2 arguments: 1) location of ontology and optionally 2) Ontology IRI, if different from 1. arg.");
+		catch( ParseException exp ) {
+			System.out.println( "Unexpected exception: " + exp.getMessage() );
+			HelpFormatter formatter = new HelpFormatter();
+			formatter.printHelp( "Oode", options );
 		}
 	}
 
-	protected String go (String ontologyPath, String ontologyIRI) throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
-
-		// Settings
+	protected String go (String ontologyPath, String ontologyIRI, boolean considerImportedOntologies, boolean considerImportedClosure) throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
 		String lang = "en";
-		boolean considerImportedOntologies = true;
-		boolean considerImportedClosure = true;
-		boolean useReasoner = true;
-
 		String content = "";
-		content = parseOntology(ontologyPath, considerImportedOntologies, considerImportedClosure, useReasoner);
+		content = parseOntology(ontologyPath, considerImportedOntologies, considerImportedClosure);
 		content = applyXSLTTransformation(content, ontologyIRI, lang);
-
 		return content;
 	}
+	protected String go (String ontologyPath, String ontologyIRI) throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
+		return go (ontologyPath, ontologyIRI, CONSTconsiderImportedOntologies, CONSTconsiderImportedClosure);
+	}
 
-	private String parseOntology (String ontologyURL, boolean considerImportedOntologies, boolean considerImportedClosure, boolean useReasoner) throws OWLOntologyCreationException, OWLOntologyStorageException  {
-		String result = "";
+	private String parseOntology (String ontologyURL, boolean considerImportedOntologies, boolean considerImportedClosure) throws OWLOntologyCreationException, OWLOntologyStorageException  {
 
 		OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
+		OWLOntology ontology = manager.loadOntology(IRI.create(ontologyURL));
 
-		OWLOntology ontology = null;
-
-		if (considerImportedClosure || considerImportedOntologies) {
-			ontology = manager.loadOntology(IRI.create(ontologyURL));
+		if (considerImportedOntologies || considerImportedClosure) {
 			Set<OWLOntology> setOfImportedOntologies = new HashSet<OWLOntology>();
 			if (considerImportedOntologies) {
 				setOfImportedOntologies.addAll(ontology.getDirectImports());
@@ -86,17 +112,11 @@ public class Oode {
 			for (OWLOntology importedOntology : setOfImportedOntologies) {
 				manager.addAxioms(ontology, importedOntology.getAxioms());
 			}
-		} else {
-			//manager.setSilentMissingImportsHandling(true);
-			ontology = manager.loadOntology(IRI.create(ontologyURL));
 		}
 
 		StringDocumentTarget parsedOntology = new StringDocumentTarget();
-
 		manager.saveOntology(ontology, new RDFXMLDocumentFormat(), parsedOntology);
-		result = parsedOntology.toString();
-
-		return result;
+		return parsedOntology.toString();
 	}
 
 	private String applyXSLTTransformation(String source, String ontologyUrl, String lang) throws TransformerException {
