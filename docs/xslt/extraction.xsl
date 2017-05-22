@@ -27,7 +27,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     xmlns:f="http://www.essepuntato.it/xslt/function"
     xmlns:dcterms="http://purl.org/dc/terms/"
-    xmlns="http://www.w3.org/1999/xhtml">
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns="http://www.w3.org/1999/xhtml"
+    >
      
     <xsl:include href="swrl-module.xsl" />
     <xsl:include href="common-functions.xsl"/>
@@ -154,13 +156,15 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
                 <xsl:call-template name="get.author" />
                 <xsl:call-template name="get.publisher" />
                 <xsl:call-template name="get.imports" />
-                <dl>
+                
+                <!--  Other visualisations -->
+                <!--dl>
                     <dt><xsl:value-of select="f:getDescriptionLabel('visualisation')" />:</dt>
                     <dd>
                         <a href="{$source}?url={$ontology-url}"><xsl:value-of select="f:getDescriptionLabel('ontologysource')" /></a>
                     </dd>
-                </dl>
-                <xsl:apply-templates select="dc:rights|dcterms:rights" />
+                </dl-->
+                <xsl:apply-templates select="dc:rights|dcterms:rights|cc:licence" />
             </div>
             <hr />
             <xsl:apply-templates select="rdfs:comment" mode="ontology" />
@@ -175,7 +179,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
             <xsl:call-template name="get.swrlrules" />            
             <xsl:call-template name="get.namespacedeclarations" />
             
-            <p class="endnote"><xsl:value-of select="f:getDescriptionLabel('endnote')" /><xsl:text> </xsl:text><a href="http://www.essepuntato.it/lode">LODE</a><xsl:text>, </xsl:text><em>Live OWL Documentation Environment</em><xsl:text>, </xsl:text><xsl:value-of select="f:getDescriptionLabel('developedby')" /><xsl:text> </xsl:text><a href="http://www.essepuntato.it">Silvio Peroni</a>.</p>
+            <p class="endnote"><xsl:value-of select="f:getDescriptionLabel('endnote')" /><xsl:text> </xsl:text><a href="https://github.com/mgskjaeveland/OODE">OODE</a><xsl:text>, </xsl:text><em>Offline OWL Documentation Environment</em><xsl:text>, </xsl:text><xsl:value-of select="f:getDescriptionLabel('developedby')" /><xsl:text> </xsl:text><a href="http://www.essepuntato.it">Silvio Peroni</a>.</p>
         </body>
     </xsl:template>
     
@@ -1295,12 +1299,14 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
     
     <xsl:template name="get.ontology.url">
         <xsl:if test="exists((@*:about|@*:ID)[normalize-space() != ''])">
+        	<xsl:variable name="IRI" select="@*:about|@*:ID" as="xs:string" />
             <dl>
                 <dt>IRI:</dt>
-                <dd><xsl:value-of select="@*:about|@*:ID" /></dd>
+                <dd><a href="{$IRI}"><xsl:value-of select="$IRI"/></a></dd>
                 <xsl:if test="exists(owl:versionIRI)">
+                	<xsl:variable name="VersionIRI" select="owl:versionIRI/@*:resource" as="xs:string" />
                     <dt>Version IRI:</dt>
-                    <dd><xsl:value-of select="owl:versionIRI/@*:resource" /></dd>
+                    <dd><a href="{$VersionIRI}"><xsl:value-of select="$VersionIRI"/></a></dd>
                 </xsl:if>
             </dl>
         </xsl:if>
@@ -1355,13 +1361,14 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
                 <xsl:if test="exists(dc:creator|dcterms:creator[ancestor::owl:Ontology])">
                     <dt><xsl:value-of select="f:getDescriptionLabel('authors')" />:</dt>
                     <xsl:apply-templates select="dc:creator|dcterms:creator[ancestor::owl:Ontology]">
-                        <xsl:sort select="text()|@*:resource" data-type="text" order="ascending" />
+                        <!--xsl:sort select="text()|@*:resource" data-type="text" order="ascending" /-->
+                        
                     </xsl:apply-templates>
                 </xsl:if>
                 <xsl:if test="exists(dc:contributor|dcterms:contributor[ancestor::owl:Ontology])">
                     <dt><xsl:value-of select="f:getDescriptionLabel('contributors')" />:</dt>
                     <xsl:apply-templates select="dc:contributor|dcterms:contributor[ancestor::owl:Ontology]">
-                        <xsl:sort select="text()|@*:resource" data-type="text" order="ascending" />
+                        <!--xsl:sort select="text()|@*:resource" data-type="text" order="ascending" /-->
                     </xsl:apply-templates>
                 </xsl:if>
             </dl>
@@ -1373,7 +1380,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
             <dl>
                 <dt><xsl:value-of select="f:getDescriptionLabel('publisher')" />:</dt>
                 <xsl:apply-templates select="dc:publisher|dcterms:publisher">
-                    <xsl:sort select="text()|@*:resource" data-type="text" order="ascending" />
+                    <!--xsl:sort select="text()|@*:resource" data-type="text" order="ascending" /-->
                 </xsl:apply-templates>
             </dl>
         </xsl:if>

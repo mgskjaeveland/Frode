@@ -46,7 +46,7 @@
     <authors>Authors</authors>
     <contributors>Contributors</contributors>
     <publisher>Publisher</publisher>
-    <toc>Table of Content</toc>
+    <toc>Table of Contents</toc>
     <tocabbr>ToC</tocabbr>
     <backto>back to</backto>
     <class>class</class>
@@ -67,7 +67,7 @@
     <namespace>default namespace</namespace>
     <namespaces>Namespace Declarations</namespaces>
     <endnote>This HTML document was obtained by processing the OWL ontology source code through</endnote>
-    <developedby>forked from LODE developed by</developedby>
+    <developedby>forked from LODE originally developed by</developedby>
     <or>or</or>
     <classtoc>Class ToC</classtoc>
     <objectpropertytoc>Object Property ToC</objectpropertytoc>

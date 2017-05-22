@@ -49,7 +49,7 @@ public class Oode {
 			System.out.println(lode.go(args[0], args[1]));
 		} 
 		else {
-			System.out.println("Error, needs 1 or 2 arguments: 1. location of ontology and optionally 2: Ontology IRI, if different from 1. arg.");
+			System.out.println("Error, needs 1 or 2 arguments: 1) location of ontology and optionally 2) Ontology IRI, if different from 1. arg.");
 		}
 	}
 
