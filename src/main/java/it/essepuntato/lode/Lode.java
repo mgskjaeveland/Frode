@@ -37,7 +37,7 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
 public class Lode {
-	private String xsltURL = "src/main/web/xslt/extraction.xsl";
+	private String xsltURL = "docs/xslt/extraction.xsl";
 	private String cssLocation = "http://lode.sourceforge.net/css/";
 	
 	public static void main (String... args) throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
