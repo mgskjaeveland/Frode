@@ -33,7 +33,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
     <xsl:include href="common-functions.xsl"/>
     <xsl:include href="structural-reasoner.xsl"/>
     
-    <xsl:output encoding="UTF-8" indent="no" method="xhtml" />
+    <xsl:output encoding="UTF-8" indent="yes" method="xhtml" />
     
     <xsl:param name="lang" select="'en'" as="xs:string" />
     <xsl:param name="css-location" select="'./'" as="xs:string" />
@@ -104,14 +104,13 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
     
     <xsl:template name="htmlhead">
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+        <link href="{$css-location}rec.css" rel="stylesheet" type="text/css" />
         <link href="{$css-location}owl.css" rel="stylesheet" type="text/css" />
         <link href="{$css-location}Primer.css" rel="stylesheet" type="text/css" />
-        <link href="{$css-location}rec.css" rel="stylesheet" type="text/css" />
         <link href="{$css-location}extra.css" rel="stylesheet" type="text/css" />
-        <link rel="shortcut icon" href="{$css-location}favicon.ico" />
-        <script src="{$css-location}jquery.js"><!-- Comment for compatibility --></script>
-        <script src="{$css-location}jquery.scrollTo.js"><!-- Comment for compatibility --></script>
-        <script src="{$css-location}marked.min.js"><!-- Comment for compatibility --></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.0/jquery.scrollTo.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
         <script>
                 $(document).ready(
                     function () {
