@@ -6,14 +6,14 @@ import org.junit.Test;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
-public class LodeTest {
+public class OodeTest {
 	
 	@Test public void testFOAF() throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
-		Lode.main("http://xmlns.com/foaf/spec/index.rdf");
+		Oode.main("http://xmlns.com/foaf/spec/index.rdf");
 	}
 
 	@Test public void testOWL() throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
-		Lode.main("http://www.w3.org/2002/07/owl");
+		Oode.main("http://www.w3.org/2002/07/owl");
 	}
 	
 }

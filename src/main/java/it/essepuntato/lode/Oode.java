@@ -36,12 +36,12 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 
-public class Lode {
+public class Oode {
 	private String xsltURL = "docs/xslt/extraction.xsl";
-	private String cssLocation = "http://lode.sourceforge.net/css/";
+	private String cssLocation = "https://mgskjaeveland.github.io/OODE/css/";
 	
 	public static void main (String... args) throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
-		Lode lode = new Lode ();
+		Oode lode = new Oode ();
 		if (args.length == 1) {
 			System.out.println(lode.go(args[0], args[0]));
 		}
