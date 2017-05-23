@@ -8,13 +8,13 @@ Other changes:
  - moving remaining essepuntato files to github pages, due to poor uptime
  
  
- Run `mvn clean compile assembly:simple` to produce `target/Oode.jar`. Run with `java -jar Oode.jar`
+ Run `mvn clean compile assembly:simple` to produce `target/Frode.jar`. Run with `java -jar Frode.jar`
  
  
  Command line interface:
  
  ```
- usage: Oode
+ usage: Frode
  -1         Enable direct ontology imports
  -a         Enable ontology import closure
  -i <arg>   The IRI to ontology, if different from the path argument.

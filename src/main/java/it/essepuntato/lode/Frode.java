@@ -81,7 +81,7 @@ public class Frode {
 		catch( ParseException exp ) {
 			System.out.println( "Unexpected exception: " + exp.getMessage() );
 			HelpFormatter formatter = new HelpFormatter();
-			formatter.printHelp( "Oode", options );
+			formatter.printHelp( "Frode", options );
 		}
 	}
 
