@@ -7,8 +7,17 @@ Other changes:
  - using cdnjs and already published css' whenever possible
  - moving remaining essepuntato files to github pages, due to poor uptime
  
- Use
-     Oode.main("http://xmlns.com/foaf/spec/index.rdf");
- to generate documentation for the ontology located at the given IRI, or
-     Oode.main("file:///localdisk/folder/file.owl", "http://www.iri.to/ontology.owl")
- to generate for a locally placed ontology, but with a different ontology IRI. Be careful to test that links from the published documentation work, e.g., images.
+ 
+ Run `mvn clean compile assembly:simple` to produce `target/Oode.jar`. Run with `java -jar Oode.jar`
+ 
+ 
+ Command line interface:
+ 
+ ```
+ usage: Oode
+ -1         Enable direct ontology imports
+ -a         Enable ontology import closure
+ -i <arg>   The IRI to ontology, if different from the path argument.
+            Optional
+ -o <arg>   The path or IRI to ontology, if local use 'file:///'. Required
+ ```
