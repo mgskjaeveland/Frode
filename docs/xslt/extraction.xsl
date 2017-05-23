@@ -179,7 +179,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
             <xsl:call-template name="get.swrlrules" />            
             <xsl:call-template name="get.namespacedeclarations" />
             
-            <p class="endnote"><xsl:value-of select="f:getDescriptionLabel('endnote')" /><xsl:text> </xsl:text><a href="https://github.com/mgskjaeveland/OODE">OODE</a><xsl:text>, </xsl:text><em>Offline OWL Documentation Environment</em><xsl:text>, </xsl:text><xsl:value-of select="f:getDescriptionLabel('developedby')" /><xsl:text> </xsl:text><a href="http://www.essepuntato.it">Silvio Peroni</a>.</p>
+            <p class="endnote"><xsl:value-of select="f:getDescriptionLabel('endnote')" /><xsl:text> </xsl:text><a href="https://github.com/mgskjaeveland/Frode">Frode</a><xsl:text>, </xsl:text><em>Offline OWL Documentation Environment</em><xsl:text>, </xsl:text><xsl:value-of select="f:getDescriptionLabel('developedby')" /><xsl:text> </xsl:text><a href="http://www.essepuntato.it">Silvio Peroni</a>.</p>
         </body>
     </xsl:template>
     

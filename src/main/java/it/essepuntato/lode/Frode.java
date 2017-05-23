@@ -42,17 +42,16 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
-import org.semanticweb.owlapi.model.parameters.Imports;
 
-public class Oode {
+public class Frode {
 	private String xsltURL = "docs/xslt/extraction.xsl";
-	private String cssLocation = "https://mgskjaeveland.github.io/OODE/css/";
+	private String cssLocation = "https://mgskjaeveland.github.io/Frode/css/";
 
 	private static final boolean CONSTconsiderImportedOntologies = false;
 	private static final boolean CONSTconsiderImportedClosure = false;
 
 	public static void main (String... args) throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
-		Oode.cli(args);
+		Frode.cli(args);
 	}
 
 	public static void cli (String... args) throws OWLOntologyCreationException, OWLOntologyStorageException, TransformerException {
@@ -75,8 +74,8 @@ public class Oode {
 			boolean closure = line.hasOption(arg4);
 
 
-			Oode oode = new Oode();
-			String result = oode.go(path, iri, imports, closure);
+			Frode dave = new Frode();
+			String result = dave.go(path, iri, imports, closure);
 			System.out.println(result);
 		}
 		catch( ParseException exp ) {
