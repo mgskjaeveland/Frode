@@ -54,7 +54,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>it.essepuntato.lode.Oode</mainClass>
+							<mainClass>it.essepuntato.lode.Frode</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
